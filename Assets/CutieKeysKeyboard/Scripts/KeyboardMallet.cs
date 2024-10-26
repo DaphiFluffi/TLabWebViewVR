@@ -9,6 +9,9 @@ namespace Normal.UI {
         [SerializeField]
         private Transform _trackedObject;
         [SerializeField]
+        private Vector3 _malletOffset = new Vector3(0, 0, 0.18f); // Adjust Z as needed to extend out from the controller
+
+        [SerializeField]
         private XRNode xRNode;
 
         [SerializeField]
@@ -30,11 +33,15 @@ namespace Normal.UI {
             rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
 
-        // Position this object at the center of the controller that we're tracking.
-        void PositionGeometry(Vector3 position, Quaternion rotation) {
-            transform.position = position;
+        // Position this object at the center of the controller that we're tracking, with an offset.
+        void PositionGeometry(Vector3 position, Quaternion rotation)
+        {
+            // Apply the offset in the local space of the tracked object
+            Vector3 offsetPosition = position + (rotation * _malletOffset);
+            transform.position = offsetPosition;
             transform.rotation = rotation;
         }
+
 
         // Mallet collision. Check if we've hit a keyboard key or not.
         void OnTriggerEnter(Collider other) {
