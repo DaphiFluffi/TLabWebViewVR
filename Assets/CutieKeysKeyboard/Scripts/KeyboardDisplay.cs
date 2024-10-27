@@ -83,6 +83,26 @@ namespace Normal.UI {
                 // Tab
                 m_webview_component.OnTabPressed();
             }
+            else if(keyPress == "upArrow")
+            {
+                // UpArrow
+                m_webview_component.OnUpArrowPressed();
+            }
+            else if (keyPress == "downArrow")
+            {
+                // DownArrow
+                m_webview_component.OnDownArrowPressed();
+            }
+            else if (keyPress == "leftArrow")
+            {
+                // LeftArrow
+                m_webview_component.OnLeftArrowPressed();
+            }
+            else if (keyPress == "rightArrow")
+            {
+                // RightArrow
+                m_webview_component.OnRightArrowPressed();
+            }
             else {
                 // Regular key press
                 //text += keyPress

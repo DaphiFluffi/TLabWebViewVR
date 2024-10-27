@@ -85,6 +85,26 @@ namespace Normal.UI {
                     // Tab
                     keyPress = "\t";
                 }
+                else if (keyPress == "upArrow")
+                {
+                    // Up Arrow
+                    keyPress = "upArrow";
+                }
+                else if (keyPress == "downArrow")
+                {
+                    // Down Arrow
+                    keyPress = "downArrow";
+                }
+                else if (keyPress == "leftArrow")
+                {
+                    // Left Arrow
+                    keyPress = "leftArrow";
+                }
+                else if (keyPress == "rightArrow")
+                {
+                    // Right Arrow
+                    keyPress = "rightArrow";
+                }
                 else
                 {
                     // Turn off shift after typing a letter
