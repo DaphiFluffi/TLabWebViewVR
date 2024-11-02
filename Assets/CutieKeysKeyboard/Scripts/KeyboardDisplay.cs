@@ -81,7 +81,7 @@ namespace Normal.UI {
             else if (keyPress == "\t")
             {
                 // Tab
-                m_webview_component.OnTabPressed();
+                m_webview_component.OnKeyPressed("    ");
             }
             else if(keyPress == "upArrow")
             {

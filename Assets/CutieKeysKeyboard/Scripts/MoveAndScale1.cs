@@ -16,6 +16,8 @@ namespace Normal.UI
 
         private State _state = State.Idle;
 
+        public OVRInput.Button mainButton = OVRInput.Button.PrimaryHandTrigger; 
+
         // Move
         private OVRInput.Controller _moveController;
         private OVRInput.Controller _idleController;
@@ -180,7 +182,7 @@ namespace Normal.UI
         // OpenXR
         bool GetGrip(OVRInput.Controller controller)
         {
-            return OVRInput.Get(OVRInput.Button.PrimaryHandTrigger, controller);
+            return OVRInput.Get(mainButton, controller);
         }
 
         Transform GetControllerTransform(OVRInput.Controller controller)
