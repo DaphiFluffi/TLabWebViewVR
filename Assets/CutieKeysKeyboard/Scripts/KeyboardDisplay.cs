@@ -80,8 +80,11 @@ namespace Normal.UI {
             }
             else if (keyPress == "\t")
             {
-                // Tab
-                m_webview_component.OnKeyPressed("    ");
+                // Tab = 4 spaces
+                for(int i = 0; i < 4; i++)
+                {
+                    m_webview_component.OnKeyPressed(" ");
+                }
             }
             else if(keyPress == "upArrow")
             {
