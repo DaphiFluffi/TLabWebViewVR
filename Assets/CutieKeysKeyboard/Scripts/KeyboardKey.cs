@@ -26,7 +26,7 @@ namespace Normal.UI {
 
         [SerializeField]
         private AudioSource _audioSource;
-        private AudioSource _neutralAudioSource;
+
         // Internal
         [HideInInspector]
         public Keyboard _keyboard;
@@ -38,18 +38,9 @@ namespace Normal.UI {
             rigidbody.isKinematic = true;
             rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             //codeEditor = GameObject.FindObjectOfType<CodeEditor>();
-
             AudioClip clickSound = Resources.Load<AudioClip>("Audio/click/click.old");
-            if (clickSound != null)
-            {
-                _neutralAudioSource = gameObject.AddComponent<AudioSource>();
-                _neutralAudioSource.clip = clickSound;
-                _neutralAudioSource.playOnAwake = false;
-            }
-            else
-            {
-                Debug.LogError("Audio clip not found! It used to be here: Audio/click/click.old.");
-            }
+            _audioSource.clip = clickSound;
+
             RefreshDisplayCharacter();
         }
 
@@ -62,7 +53,7 @@ namespace Normal.UI {
         public void KeyPressed() {
             _position = -0.1f;
 
-            /*if (_audioSource != null) {
+            if (_audioSource != null) {
                 if (_audioSource.isPlaying)
                     _audioSource.Stop();
 
@@ -70,17 +61,6 @@ namespace Normal.UI {
                 float pitchVariance = Random.Range(0.95f, 1.05f);
                 _audioSource.pitch = scalePitch * pitchVariance;
                 _audioSource.Play();
-            }*/
-
-            if (_neutralAudioSource != null)
-            {
-                if (_neutralAudioSource.isPlaying)
-                    _neutralAudioSource.Stop();
-
-                float scalePitch = 1.0f / (_keyboard.transform.lossyScale.x + 0.2f);
-                float pitchVariance = Random.Range(0.95f, 1.05f);
-                _neutralAudioSource.pitch = scalePitch * pitchVariance;
-                _neutralAudioSource.Play();
             }
         }
 
