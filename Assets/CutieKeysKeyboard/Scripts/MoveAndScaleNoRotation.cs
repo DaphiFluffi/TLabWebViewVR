@@ -3,7 +3,7 @@ using UnityEngine.XR;
 
 namespace Normal.UI
 {
-    public class MoveAndScale1 : MonoBehaviour
+    public class MoveAndScaleNoRotation : MonoBehaviour
     {
         public OVRCameraRig cameraRig;
 
@@ -31,13 +31,13 @@ namespace Normal.UI
 
         // Animation
         private Vector3 _targetPosition;
-        private Quaternion _targetRotation;
+        //private Quaternion _targetRotation;
         private Vector3 _targetScale;
 
         void OnEnable()
         {
             _targetPosition = transform.position;
-            _targetRotation = transform.rotation;
+            //_targetRotation = transform.rotation;
             _targetScale = transform.localScale;
         }
 
@@ -46,7 +46,7 @@ namespace Normal.UI
             HandleGripState();
 
             transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * 20.0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * 20.0f);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, Time.deltaTime * 20.0f);
             transform.localScale = Vector3.Lerp(transform.localScale, _targetScale, Time.deltaTime * 20.0f);
         }
 
@@ -137,7 +137,7 @@ namespace Normal.UI
             // Update the target position and rotation based on the controller movement
             Transform moveTransform = GetControllerTransform(_moveController);
             _targetPosition = moveTransform.TransformPoint(_positionOffsetFromController);
-            _targetRotation = moveTransform.rotation * _rotationOffsetFromController;
+            //_targetRotation = moveTransform.rotation * _rotationOffsetFromController;
         }
 
         void EndMove()
@@ -170,7 +170,7 @@ namespace Normal.UI
 
             // Use it to transform the offsets calculated at the start of the scale operation.
             _targetPosition = GetControllerCentroidTransform().MultiplyPoint(_positionOffset);
-            _targetRotation = GetControllerOrientation() * _rotationOffset;
+            //_targetRotation = GetControllerOrientation() * _rotationOffset;
             _targetScale = GetControllerDistance() * _scaleOffset;
         }
 
