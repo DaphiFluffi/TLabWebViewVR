@@ -67,7 +67,7 @@ namespace Normal.UI {
                         layout = Layout.Numbers;
                     else if (layout == Layout.Numbers)
                         layout = Layout.Letters;
-
+                    
                     shouldFireKeyPressEvent = false;
                 }
                 else if (keyPress == "\\b")

@@ -42,7 +42,7 @@ namespace Normal.UI {
             transform.rotation = rotation;
         }
 
-
+        // TODO remove for cube keyboard
         // Mallet collision. Check if we've hit a keyboard key or not.
         void OnTriggerEnter(Collider other) {
             if (_keyboard == null) {

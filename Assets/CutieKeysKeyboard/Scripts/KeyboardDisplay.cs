@@ -20,7 +20,8 @@ namespace Normal.UI {
         [SerializeField]
         private Keyboard _keyboard;
         public  Keyboard  keyboard { get { return _keyboard; } set { SetKeyboard(value); } }
-        private WebViewInputField m_webview_component;
+        public WebViewInputField m_webview_component;
+
         void Awake() {
             StartObservingKeyboard(_keyboard);
             //codeEditor = GameObject.FindObjectOfType<CodeEditor>();

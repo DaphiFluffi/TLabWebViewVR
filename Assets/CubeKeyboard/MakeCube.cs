@@ -1,18 +1,21 @@
+using GooglyEyesGames.TicTacToe;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using TMPro;
-using static UnityEngine.Rendering.DebugUI.Table;
-using System.Linq;
+using UnityEngine.UI;
+
 [ExecuteInEditMode]
 public class MakeCube : MonoBehaviour
 {
     public GameObject cubePrefab;
     //public GameObject whiteCubePrefab;
-
+    //public GameObject newParentPivotObj;
     public int size = 4;
     private Queue<string> alphabetQueue = new Queue<string>();
-
-   
+    private List<string> letterList = new List<string>();
+    private Vector3 pivot;
+    private Vector3 localSc;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +24,19 @@ public class MakeCube : MonoBehaviour
         {
             DestroyImmediate(child.gameObject); // nope
         }*/
+        localSc = cubePrefab.GetComponentInChildren<MeshFilter>().transform.localScale;
         char[] alphabet = "abcdefghijklmnopqrstuvwxyz.,=():/*-+?!{}<>[]#_\"$@\\|~&1234567890".ToCharArray();
+        char[] letters = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         foreach (char letter in alphabet)
         {
             alphabetQueue.Enqueue(letter.ToString());
         }
+        foreach (char letter in letters)
+        {
+            letterList.Add(letter.ToString());
+        }
+       
+
         BuildMyCube(size);
     }
 
@@ -44,51 +55,76 @@ public class MakeCube : MonoBehaviour
                         k == 0 || k == size - 1 ||  // front and back faces
                         i == 0 || i == size - 1 ||  // left and right faces
                         j == 0 || j == size - 1;    // top and bottom faces
-                    /*bool isOutline = (i == 0 || j == 0 || i == size - 1 || j == size - 1);
+                    //bool isOutline = (i == 0 || j == 0 || i == size - 1 || j == size - 1);
 
-                    if (isOutline)
-                    {
-                        colorPrefab = whiteCubePrefab;
-                    }
-                    else
-                    {
-                        colorPrefab = cubePrefab;
-                    }*/
+                    int middle = size / 2;
+
+                    bool isMiddleCube = k == middle && i == middle && j == middle;
+
+                    
+                    GameObject newCube = Instantiate(cubePrefab, new Vector3(
+                                            (localSc.x + 0.01f) * i,
+                                            (localSc.y + 0.01f) * j,
+                                            0.01f),
+                                            Quaternion.identity,
+                                            block.transform);
                     if (isSurfaceCube)
                     {
-                        Instantiate(cubePrefab, new Vector3(
-                            (cubePrefab.transform.localScale.x + 0.01f) * i,
-                            (cubePrefab.transform.localScale.y + 0.01f) * j,
-                            0.01f),
-                            Quaternion.identity,
-                            block.transform);
-                        /* if (colorPrefab.Equals(cubePrefab))
-                         {*/
-                        TextMeshProUGUI textObj = cubePrefab.GetComponentInChildren<Canvas>().GetComponentInChildren<TextMeshProUGUI>();
-                        string currentLetter = "";
-                        if (alphabetQueue.Count > 0)
+                         
+                         string currentLetter = "";
+
+                         if (alphabetQueue.Count > 0)
+                         {
+                             currentLetter = alphabetQueue.Dequeue();
+                             newCube.name = currentLetter;
+                         }
+                         else
+                         {
+                             newCube.name = "noLetter";
+                         }
+                         newCube.GetComponentInChildren<Text>().text = currentLetter;
+
+                        if (newCube.GetComponent<KeyboardKey>() != null)
                         {
-                            currentLetter = alphabetQueue.Dequeue();
-                            cubePrefab.name = currentLetter;
+
+                            newCube.GetComponent<KeyboardKey>().character = currentLetter;
+                            if (letterList.Contains(currentLetter)) // if it's a letter that can be upper case
+                            {
+                                newCube.GetComponent<KeyboardKey>().shiftCharacter = currentLetter.ToUpper();
+                            }
                         }
                         else
                         {
-                            cubePrefab.name = "noLetter";
+                            Debug.Log("Nulll");
+                            Debug.Log(newCube != null ? "newCube exists" : "newCube is null");
+
+
                         }
-                        textObj.text = currentLetter;
-                        /*}
-                        else
-                        {
-                            Debug.Log("It's the white prefab");
-                        }*/
+
+                    }
+                    else {
+                        // leave inner cubes blank
+                        newCube.GetComponentInChildren<Text>().text = "";
+                    }
+
+                    if (isMiddleCube)
+                    {
+                        pivot = newCube.transform.position;
+                        Debug.Log(pivot);
                     }
 
                 }
             }
-            block.transform.position = new Vector3(
+            Debug.Log(block.transform.position );
+
+            block.transform.localPosition = new Vector3(
                 block.transform.position.x,
-                block.transform.position.y,
-                (cubePrefab.transform.localScale.z + 0.01f) * k);
+                0, //this.transform.localPosition.y,
+                (localSc.z + 0.01f) * k);
+            //newParentPivotObj.transform.position = pivot;
+            //block.transform.parent = null;
+            //block.transform.parent = newParentPivotObj.transform;
         }
+
     }
 }
