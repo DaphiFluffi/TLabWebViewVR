@@ -3,35 +3,29 @@ using UnityEngine.UI;
 
 public class RightControllerRaycast : MonoBehaviour
 {
-    // Distance for the raycast (adjust as needed)
-    public float rayDistance = 10.0f;
-
-    // Reference to the LayerMask (set this to focus on specific layers if needed)
-    public LayerMask targetLayer;
-
-    public Text DebugText;
+    public Camera vrCamera; // Assign the VR Camera (e.g., CenterEyeAnchor)
+    public LayerMask interactableLayer; // Layer for canvases and interactable objects
+    public Text debugText; // Text object for debugging output
 
     void Update()
     {
-        // Define the starting point (origin) and direction for the raycast
-        Vector3 rayOrigin = transform.position;
-        Vector3 rayDirection = transform.forward;
-
-        // Create a RaycastHit variable to store hit information
-        RaycastHit hit;
-
-        // Cast the ray from the right controller’s position and check for hits
-        if (Physics.Raycast(rayOrigin, rayDirection, out hit, rayDistance, targetLayer))
+        // Check if the trigger button is pressed
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)) // Meta Quest trigger button
         {
-            // Check if the collider hit is a trigger
-            if (hit.collider.isTrigger)
+            Ray ray = new Ray(vrCamera.transform.position, vrCamera.transform.forward);
+            RaycastHit hit;
+
+            // Perform the raycast
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
             {
-                DebugText.text = "Hit a trigger collider: " + hit.collider.name;
-                // Here, you can handle the hit, e.g., perform some action on the hit object
+                // Update the debug text with the clicked object's name
+                debugText.text = "Canvas clicked: " + hit.collider.gameObject.name;
+            }
+            else
+            {
+                // Optional: Clear debug text if nothing is clicked
+                debugText.text = "No canvas clicked.";
             }
         }
-
-        // For debugging: visualize the ray in the scene view
-        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
     }
 }

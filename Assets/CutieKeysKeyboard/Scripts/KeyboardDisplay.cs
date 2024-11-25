@@ -36,6 +36,11 @@ namespace Normal.UI {
             StopObservingKeyboard(_keyboard);
         }
 
+        public void ChangeWebview(WebViewInputField webview_component)
+        {
+            m_webview_component = webview_component;
+        }
+
         void SetKeyboard(Keyboard keyboard) {
             if (keyboard == _keyboard)
                 return;
