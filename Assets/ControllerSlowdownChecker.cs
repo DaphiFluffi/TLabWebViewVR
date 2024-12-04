@@ -1,4 +1,3 @@
-using Meta.XR.ImmersiveDebugger.UserInterface;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -13,17 +12,48 @@ public class ControllerSlowdownChecker : MonoBehaviour
     public Normal.UI.Keyboard _keyboard;
     public XRNode xRNode;
     public OVRInput.Button button = OVRInput.Button.PrimaryHandTrigger;
+    // Change the material color based on velocity for feedback
+    public Material material;
+    public float alpha;
+
 
     private Collider currentCollider = null; // Tracks the collider the controller is interacting with
     private bool letterSelected = false;    // Tracks if the letter has already been selected
+    private Vector3 lastPosition; // To store the previous frame's position
 
-    void Update()
+    void Start()
+    { 
+        lastPosition = keyboardMallet.transform.position;
+        material = new Material(highlightMaterial);
+        alpha = highlightMaterial.color.a;
+
+}
+
+void Update()
     {
-        debugText.text = "is currentColliderNull ? " + (currentCollider == null);
-        if (OVRInput.Get(button) && currentCollider != null && !letterSelected)
+        if (currentCollider != null)
         {
-            SelectLetter(currentCollider);
-            letterSelected = true; // Mark letter as selected to prevent re-triggering
+            // Because isKinemaic disables the ability to track velocity
+            Vector3 currentPosition = keyboardMallet.transform.position;
+            Vector3 velocity = (currentPosition - lastPosition) / Time.deltaTime;
+
+            // Update last position for the next frame
+            lastPosition = currentPosition;
+
+            // Set the new color with the desired RGB and the alpha from the reference material
+            if (velocity.magnitude < 0.01f && !letterSelected) // Only select if stationary and not already selected
+            {
+                material.color = new Color(Color.green.r, Color.green.g, Color.green.b, alpha);
+                ChangeButtonColor(currentCollider, material); // Stationary
+                SelectLetter(currentCollider);
+            }
+            else
+            {
+                ChangeButtonColor(currentCollider, defaultMaterial);
+
+                //material.color = Color.black;
+                //ChangeButtonColor(currentCollider, material); // Swipe
+            }
         }
     }
 
@@ -31,20 +61,11 @@ public class ControllerSlowdownChecker : MonoBehaviour
     {
         // Store the collider when entering
         debugText.text = "Entered collider: " + other.name;
+        //ChangeButtonColor(other, highlightMaterial);
+
         currentCollider = other;
         letterSelected = false; // Reset flag on entering a new collider
     }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (currentCollider == null && other != null)
-        {
-            debugText.text = "Staying inside collider: " + other.name;
-            currentCollider = other;
-            letterSelected = false; // Reset flag in case OnTriggerEnter was missed
-        }
-    }
-
 
     void OnTriggerExit(Collider other)
     {
@@ -53,13 +74,12 @@ public class ControllerSlowdownChecker : MonoBehaviour
             debugText.text = "Exited collider: " + other.name;
 
             // Reset the material to default
-            ChangeButtonColor(other, defaultMaterial);
+            //ChangeButtonColor(other, defaultMaterial);
 
             currentCollider = null;
             letterSelected = false; // Allow new selection
         }
     }
-
 
     void SelectLetter(Collider other)
     {
@@ -75,16 +95,19 @@ public class ControllerSlowdownChecker : MonoBehaviour
 
         Normal.UI.KeyboardKey key = keyRigidbody.GetComponent<Normal.UI.KeyboardKey>();
 
-        if (key != null)
+        if (key != null && !letterSelected) // Check if the letter has not been selected
         {
             if (key.IsMalletHeadInFrontOfKey(keyboardMallet))
             {
                 _keyboard._MalletStruckKeyboardKey(keyboardMallet, key);
-                ChangeButtonColor(other, highlightMaterial); // Change to red
+                //ChangeButtonColor(other, highlightMaterial); // Change to red
                 TriggerHapticPulse();
+
+                letterSelected = true; // Mark as selected to avoid duplicate actions
             }
         }
     }
+
 
     void ChangeButtonColor(Collider buttonCollider, Material newMaterial)
     {

@@ -44,7 +44,7 @@ namespace Normal.UI {
 
         // TODO remove for cube keyboard
         // Mallet collision. Check if we've hit a keyboard key or not.
-        void OnTriggerEnter(Collider other) {
+       /* void OnTriggerEnter(Collider other) {
             if (_keyboard == null) {
                 Debug.LogError("Huh, I, this keyboard mallet, have struck something. However, I am not the child of a keyboard. A lost soul. It pains me to ignore this collision event. What does it mean? Who was it meant for? Unfortunately I am given no choice.");
                 return;
@@ -65,7 +65,7 @@ namespace Normal.UI {
                 // Trigger haptic pulse (originally I wanted to limit this to just key strikes, but I guess haptics make sense if you hit anything...)
                 TriggerHapticPulse();
             }
-        }
+        }*/
 
         void Update() {
             // I want the value from the previous frame.

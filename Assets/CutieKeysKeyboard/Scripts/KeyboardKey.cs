@@ -76,12 +76,13 @@ namespace Normal.UI {
         // Key animation
         void Update() {
             // Animate bounce
-            _position = Mathf.Lerp(_position, _targetPosition, Time.deltaTime * 20.0f);
+            // TODO uncomment for cube keyboard
+            //_position = Mathf.Lerp(_position, _targetPosition, Time.deltaTime * 20.0f);
 
             // Set position
-            Vector3 localPosition = _geometry.localPosition;
-            localPosition.y = _position;
-            _geometry.localPosition = localPosition;
+           // Vector3 localPosition = _geometry.localPosition;
+            //localPosition.y = _position;
+            //_geometry.localPosition = localPosition;
         }
 
         public void RefreshDisplayCharacter() {

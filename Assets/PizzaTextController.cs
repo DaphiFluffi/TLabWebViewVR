@@ -7,13 +7,13 @@ public class PizzaTextController : MonoBehaviour
     public Text debugText;
     //public OVRInput.Button mainButton = OVRInput.Button.PrimaryHandTrigger;
 
-
     private Transform lastHighlightedSlice = null;
     private Color oldColor  = Color.black;
     private Transform selectedSlice;
     private string selectedLetter;
     private string lastHighlightedLetter = null;
-    
+    private float valueToAdd = 0;
+
     void Update()
     {
         // Right joystick for slice selection
@@ -51,17 +51,20 @@ public class PizzaTextController : MonoBehaviour
             {
                 letterAngle += 360;
             }
-            debugText.text = $"Raw Letter Angle: {letterAngle}";
+            //debugText.text = $"Raw Letter Angle: {letterAngle}";
 
-            letterAngle += 270; // rotate coordinate system
+            letterAngle += 45; // rotate coordinate system
             letterAngle %= 360;
+
+            //debugText.text += $" Adjusted Letter Angle: {letterAngle}";
 
             // letter selection in four slices
             Button[] fourButtons = selectedSlice.GetComponentsInChildren<Button>();
 
             selectedLetter = fourButtons[0].name;
 
-            if (letterAngle > 45 && letterAngle <= 135)
+            selectedLetter = fourButtons[(int) (letterAngle / 90)].name; // 0/90 = index 0, 90/90 = index 1, 180/90 = index 2, 270/90 = index 3 
+            /*if (letterAngle > 45 && letterAngle <= 135)
             {
                 selectedLetter = fourButtons[1].name;
             }
@@ -72,9 +75,9 @@ public class PizzaTextController : MonoBehaviour
             else if (letterAngle > 225 && letterAngle <= 315)
             {
                 selectedLetter = fourButtons[2].name;
-            }
-            debugText.text = "currentLetter " + selectedLetter;
-            debugText.text = "selectedLetter != lastHighlightedLetter" + (selectedLetter != lastHighlightedLetter) + " old " + lastHighlightedLetter + " new " + selectedLetter;
+            }*/
+            //debugText.text = "currentLetter " + selectedLetter;
+            //debugText.text = "selectedLetter != lastHighlightedLetter" + (selectedLetter != lastHighlightedLetter) + " old " + lastHighlightedLetter + " new " + selectedLetter;
             // Highlight Letter red, unhighlight white
             if (selectedLetter != lastHighlightedLetter)
             {
@@ -163,6 +166,10 @@ public class PizzaTextController : MonoBehaviour
         else
         {
             debugText.text = "enterLetter " + letter;
+            LetterSelectSingleton.Instance.KeyPressed(letter);
+
         }
     }
+
+    
 }

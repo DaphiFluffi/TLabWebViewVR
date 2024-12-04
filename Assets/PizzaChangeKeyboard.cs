@@ -10,6 +10,8 @@ public class PizzaChangeKeyboard : MonoBehaviour
     public GameObject lowerCase;
     public GameObject upperCase; // not upper case yet
     public GameObject numpad;
+    public GameObject controls;
+
 
     private GameObject currentlyActiveKeyboard;
     private int currentKeyboardIndex = 0; // 0 = lowercase, 1 = uppercase, 2 = numpad
@@ -17,7 +19,7 @@ public class PizzaChangeKeyboard : MonoBehaviour
 
     private void Start()
     {
-        keyboards = new GameObject[] { lowerCase, upperCase, numpad };
+        keyboards = new GameObject[] { lowerCase, upperCase, numpad, controls };
 
         ActivateKeyboard(currentKeyboardIndex);
 
