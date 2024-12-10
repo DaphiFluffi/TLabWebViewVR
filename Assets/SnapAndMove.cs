@@ -2,39 +2,35 @@ using UnityEngine;
 
 public class SnapAndMove : MonoBehaviour
 {
-    public Transform cubeKeyboard; // Parent transform of cube of cubes
-    public Transform drumstickHead; // The head attached to the controller
-    public float snapDistance = 0.1f; // Distance threshold for snapping
+    public Transform cubeKeyboard;
+    public Transform drumstickHead;
     public Material highlightMaterial;
     public Material defaultMaterial;
     public Renderer keyboardRenderer;
 
 
-    private bool isSnapped = false; // Whether the keyboard is snapped to the drumstick
+    private bool isSnapped = false; 
 
     //private Vector3 offset; // Offset between the head and the keyboard when snapped
 
     void Update()
     {
-        if (isSnapped)
+        if (OVRInput.GetDown(OVRInput.Button.One))
         {
-            // Move and tilt the keyboard with the drumstick
-            cubeKeyboard.position = drumstickHead.position;// + offset;
-            cubeKeyboard.rotation = drumstickHead.rotation;
-        }
-        else
-        {
-            // Check snapping condition
-            if (OVRInput.GetDown(OVRInput.Button.One)) // Replace with VR controller button check
+            if (isSnapped)
+            {
+                Unsnap();
+            }
+            else
             {
                 Snap();
             }
         }
 
-        // Unsnap when button is pressed
-        if (isSnapped && OVRInput.GetDown(OVRInput.Button.Two)) // Replace with VR controller button check
+        if (isSnapped)
         {
-            Unsnap();
+            cubeKeyboard.position = drumstickHead.position;
+            cubeKeyboard.rotation = drumstickHead.rotation;
         }
     }
 

@@ -5,18 +5,18 @@ using TLab.Android.WebView;
 //using InGameCodeEditor;
 
 namespace Normal.UI {
-    public class KeyboardDisplay : MonoBehaviour {
-
-       // [SerializeField]
-        //private TMP_InputField _inputField;
+    public class CubeKeyboardDisplay : MonoBehaviour {
 
         [SerializeField]
-        private Keyboard _keyboard;
-        public  Keyboard  keyboard { get { return _keyboard; } set { SetKeyboard(value); } }
+        private TMP_InputField _inputField;
+
+        [SerializeField]
+        private CubeKeyboard _keyboard;
+        public  CubeKeyboard  keyboard { get { return _keyboard; } set { SetCubeKeyboard(value); } }
         public WebViewInputField m_webview_component;
 
         void Awake() {
-            StartObservingKeyboard(_keyboard);
+            StartObservingCubeKeyboard(_keyboard);
             //codeEditor = GameObject.FindObjectOfType<CodeEditor>();
         }
 
@@ -26,7 +26,7 @@ namespace Normal.UI {
         }
 
         void OnDestroy() {
-            StopObservingKeyboard(_keyboard);
+            StopObservingCubeKeyboard(_keyboard);
         }
 
         public void ChangeWebview(WebViewInputField webview_component)
@@ -34,49 +34,49 @@ namespace Normal.UI {
             m_webview_component = webview_component;
         }
 
-        void SetKeyboard(Keyboard keyboard) {
+        void SetCubeKeyboard(CubeKeyboard keyboard) {
             if (keyboard == _keyboard)
                 return;
 
-            StopObservingKeyboard(_keyboard);
-            StartObservingKeyboard(keyboard);
+            StopObservingCubeKeyboard(_keyboard);
+            StartObservingCubeKeyboard(keyboard);
 
             _keyboard = keyboard;
         }
 
-        void StartObservingKeyboard(Keyboard keyboard) {
+        void StartObservingCubeKeyboard(CubeKeyboard keyboard) {
             if (keyboard == null)
                 return;
 
             keyboard.keyPressed += KeyPressed;
         }
 
-        void StopObservingKeyboard(Keyboard keyboard) {
+        void StopObservingCubeKeyboard(CubeKeyboard keyboard) {
             if (keyboard == null)
                 return;
 
             keyboard.keyPressed -= KeyPressed;
         }
 
-        void KeyPressed(Keyboard keyboard, string keyPress) {
+        void KeyPressed(CubeKeyboard keyboard, string keyPress) {
             //string text = _text.text;
             // todo uncomment for cube keyboard
-            //_inputField.Select(); // Select the input field
-            //_inputField.ActivateInputField(); // Activate the input field
+            _inputField.Select(); // Select the input field
+            _inputField.ActivateInputField(); // Activate the input field
 
-            //string text = _inputField.text;
+            string text = _inputField.text;
 
             if (keyPress == "\b") {
                 // Backspace
-                //if (text.Length > 0) { 
-                  //  text = text.Remove(text.Length - 1); 
-                //}
+                if (text.Length > 0) { 
+                    text = text.Remove(text.Length - 1); 
+                }
                 m_webview_component.OnBackSpacePressed();
             }
             else if (keyPress == "\n"){
                 // Enter
-                //text += "\n"; // Append a new line to the input field text
-                //_inputField.caretPosition = _inputField.text.Length; // Move the caret to the end
+                text += "\n"; // Append a new line to the input field text
+                _inputField.caretPosition = _inputField.text.Length; // Move the caret to the end
                 m_webview_component.OnEnterPressed();
             }
             else if (keyPress == "\t")
@@ -109,12 +109,12 @@ namespace Normal.UI {
             }
             else {
                 // Regular key press
-                //text += keyPress;
-                //_inputField.caretPosition = _inputField.text.Length; // Move the caret to the end
+                text += keyPress;
+                _inputField.caretPosition = _inputField.text.Length; // Move the caret to the end
                 m_webview_component.OnKeyPressed(keyPress);
             }
 
-            //_inputField.text = text;
+            _inputField.text = text;
         }
     }
 }

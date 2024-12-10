@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CubeSpecial
   - CubeTag
+  - Study
   layers:
   - Default
   - TransparentFX

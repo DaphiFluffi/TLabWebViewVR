@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Normal.UI {
     [ExecuteInEditMode]
-    public class KeyboardKey : MonoBehaviour {
+    public class CubeKeyboardKey : MonoBehaviour {
         public string character = "a";
         
         //public CodeEditor codeEditor;
@@ -29,7 +29,7 @@ namespace Normal.UI {
 
         // Internal
         [HideInInspector]
-        public Keyboard _keyboard;
+        public CubeKeyboard _keyboard;
 
         void Awake() {
             // Configure the rigidbody
@@ -44,7 +44,7 @@ namespace Normal.UI {
             RefreshDisplayCharacter();
         }
 
-        public bool IsMalletHeadInFrontOfKey(KeyboardMallet mallet) {
+        public bool IsMalletHeadInFrontOfCubeKey(CubeKeyboardMallet mallet) {
             Vector3 localMalletHeadPosition = transform.InverseTransformPoint(mallet.malletHeadPosition);
 
             return localMalletHeadPosition.y >= 0.0f;
@@ -76,12 +76,13 @@ namespace Normal.UI {
         // Key animation
         void Update() {
             // Animate bounce
-            _position = Mathf.Lerp(_position, _targetPosition, Time.deltaTime * 20.0f);
+            // TODO uncomment for cube keyboard
+            //_position = Mathf.Lerp(_position, _targetPosition, Time.deltaTime * 20.0f);
 
             // Set position
-            Vector3 localPosition = _geometry.localPosition;
-            localPosition.y = _position;
-            _geometry.localPosition = localPosition;
+           // Vector3 localPosition = _geometry.localPosition;
+            //localPosition.y = _position;
+            //_geometry.localPosition = localPosition;
         }
 
         public void RefreshDisplayCharacter() {
