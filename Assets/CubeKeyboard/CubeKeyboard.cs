@@ -14,6 +14,9 @@ namespace Normal.UI {
         [SerializeField]
         private CubeKeyboardKey _layoutSwapKey;
 
+        [SerializeField]
+        private GameObject _shiftedLetters;
+
         private CubeKeyboardMallet[] _mallets;
         private CubeKeyboardKey[]    _keys;
 
@@ -107,9 +110,16 @@ namespace Normal.UI {
                 }
                 else
                 {
-                    // Turn off shift after typing a letter
+                    // Fire key press event first
                     if (shift && layout == Layout.Letters)
-                        shift = false;
+                    {
+                        keyPressed?.Invoke(this, keyPress);
+                        shift = false; // Only reset shift after event is fired
+                    }
+                    else
+                    {
+                        keyPressed?.Invoke(this, keyPress);
+                    }
                 }
 
                 if (shouldFireKeyPressEvent)
@@ -117,43 +127,59 @@ namespace Normal.UI {
             }
         }
 
-        void SetShift(bool shift) {
+        void SetShift(bool shift)
+        {
             if (shift == _shift)
                 return;
 
+            _shift = shift;
+
+            // Toggle visibility of letter sets
+            if (_layout == Layout.Letters)
+            {
+                _letters.SetActive(!_shift);       // Regular letters when shift is off
+                _shiftedLetters.SetActive(_shift); // Shifted letters when shift is on
+            }
+
+            // Apply shift state to individual keys
             foreach (CubeKeyboardKey key in _keys)
                 key.shift = shift;
-            
-            _shift = shift;
         }
 
-        void SetLayout(Layout layout) {
+        void SetLayout(Layout layout)
+        {
             if (layout == _layout)
                 return;
 
-            shift = false;
+            shift = false; // Reset shift state when layout changes
 
-            if (layout == Layout.Letters) {
-                // Swap layouts
+            if (layout == Layout.Letters)
+            {
+                // Show letters layout
                 _letters.SetActive(true);
+                _shiftedLetters.SetActive(false); // Ensure shifted letters are hidden
                 _numbers.SetActive(false);
 
                 // Update layout swap key
-                _layoutSwapKey.displayCharacter      = "123";
+                _layoutSwapKey.displayCharacter = "123";
                 _layoutSwapKey.shiftDisplayCharacter = "123";
                 _layoutSwapKey.RefreshDisplayCharacter();
-            } else if (layout == Layout.Numbers) {
-                // Swap layouts
+            }
+            else if (layout == Layout.Numbers)
+            {
+                // Show numbers layout
                 _letters.SetActive(false);
+                _shiftedLetters.SetActive(false); // Ensure shifted letters are hidden
                 _numbers.SetActive(true);
 
                 // Update layout swap key
-                _layoutSwapKey.displayCharacter      = "abc";
+                _layoutSwapKey.displayCharacter = "abc";
                 _layoutSwapKey.shiftDisplayCharacter = "abc";
                 _layoutSwapKey.RefreshDisplayCharacter();
             }
 
             _layout = layout;
         }
+
     }
 }
