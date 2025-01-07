@@ -2,11 +2,12 @@
 using UnityEngine.UI;
 using TMPro;
 using TLab.Android.WebView;
+using TLab.VKeyborad;
 //using InGameCodeEditor;
 
 namespace Normal.UI {
     public class CubeKeyboardDisplay : MonoBehaviour {
-
+        
         [SerializeField]
         private TMP_InputField _inputField;
 
@@ -56,6 +57,13 @@ namespace Normal.UI {
                 return;
 
             keyboard.keyPressed -= KeyPressed;
+        }
+
+        public void PressSpaceAndClearTMPInputField()
+        {
+            m_webview_component.OnKeyPressed(" ");
+            _inputField.Select();
+            _inputField.text = "";
         }
 
         void KeyPressed(CubeKeyboard keyboard, string keyPress) {

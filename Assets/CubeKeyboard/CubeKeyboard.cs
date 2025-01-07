@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Normal.UI {
     public class CubeKeyboard : MonoBehaviour {
@@ -11,21 +12,25 @@ namespace Normal.UI {
         [SerializeField]
         private GameObject  _numbers;
 
+        public GameObject _shiftedLetters;
+        public GameObject _symbols;
+        public Text debugText;
+
         [SerializeField]
         private CubeKeyboardKey _layoutSwapKey;
 
-        [SerializeField]
-        private GameObject _shiftedLetters;
 
         private CubeKeyboardMallet[] _mallets;
         private CubeKeyboardKey[]    _keys;
 
-        private bool _shift = false;
-        public  bool  shift { get { return _shift; } set { SetShift(value); } }
-
+       // private bool _shift = false;
+       // public  bool  shift { get { return _shift; } set { SetShift(value); } }
+        private bool shifted = false;
+        private bool letterLayout;
         public enum Layout {
             Letters,
-            Numbers
+            Numbers,
+            Symbols
         };
 
         private Layout _layout = Layout.Letters;
@@ -43,7 +48,8 @@ namespace Normal.UI {
         }
 
         // Internal
-        public void _MalletStruckCubeKeyboardKey(CubeKeyboardMallet mallet, CubeKeyboardKey key) {
+        public void _MalletStruckCubeKeyboardKey(CubeKeyboardMallet mallet, CubeKeyboardKey key)
+        {
             // Did we hit the key for another keyboard?
             if (key._keyboard != this)
                 return;
@@ -52,25 +58,40 @@ namespace Normal.UI {
             key.KeyPressed();
 
             // Fire key press event
-            if (keyPressed != null) {
+            if (keyPressed != null)
+            {
                 string keyPress = key.GetCharacter();
 
                 bool shouldFireKeyPressEvent = true;
 
                 if (keyPress == "\\s")
                 {
-                    // Shift
-                    shift = !shift;
+
+                    if (_letters.activeSelf || _shiftedLetters.activeSelf)
+                    {
+                        shifted = !shifted;
+
+                        if (shifted)
+                        {
+                            _shiftedLetters.SetActive(true);
+                            _letters.SetActive(false);
+                            debugText.text = "Show Normal Letters";
+                        }
+                        else
+                        {
+                            _shiftedLetters.SetActive(false);
+                            _letters.SetActive(true);
+                            debugText.text = "Show Shifted Letters";
+                        }
+
+                        debugText.text += "Shift " + shifted;
+                    }
                     shouldFireKeyPressEvent = false;
                 }
                 else if (keyPress == "\\l")
                 {
                     // Layout swap
-                    if (layout == Layout.Letters)
-                        layout = Layout.Numbers;
-                    else if (layout == Layout.Numbers)
-                        layout = Layout.Letters;
-                    
+                    CycleLayout();
                     shouldFireKeyPressEvent = false;
                 }
                 else if (keyPress == "\\b")
@@ -110,16 +131,10 @@ namespace Normal.UI {
                 }
                 else
                 {
-                    // Fire key press event first
-                    if (shift && layout == Layout.Letters)
-                    {
-                        keyPressed?.Invoke(this, keyPress);
-                        shift = false; // Only reset shift after event is fired
-                    }
-                    else
-                    {
-                        keyPressed?.Invoke(this, keyPress);
-                    }
+                    // Turn off shift after typing a letter
+                    /*if (shifted && layout == Layout.Letters)
+                        debugText.text = "Turn off shift after typing a letter";
+                    shifted = false;*/
                 }
 
                 if (shouldFireKeyPressEvent)
@@ -127,50 +142,35 @@ namespace Normal.UI {
             }
         }
 
-        void SetShift(bool shift)
-        {
-            if (shift == _shift)
-                return;
-
-            _shift = shift;
-
-            // Toggle visibility of letter sets
-            if (_layout == Layout.Letters)
-            {
-                _letters.SetActive(!_shift);       // Regular letters when shift is off
-                _shiftedLetters.SetActive(_shift); // Shifted letters when shift is on
-            }
-
-            // Apply shift state to individual keys
-            foreach (CubeKeyboardKey key in _keys)
-                key.shift = shift;
-        }
-
-        void SetLayout(Layout layout)
-        {
+        void SetLayout(Layout layout) {
             if (layout == _layout)
                 return;
 
-            shift = false; // Reset shift state when layout changes
-
-            if (layout == Layout.Letters)
-            {
-                // Show letters layout
+            if (layout == Layout.Letters) {
+                // Swap layouts
                 _letters.SetActive(true);
-                _shiftedLetters.SetActive(false); // Ensure shifted letters are hidden
                 _numbers.SetActive(false);
+                _symbols.SetActive(false);
 
                 // Update layout swap key
-                _layoutSwapKey.displayCharacter = "123";
+                _layoutSwapKey.displayCharacter      = "123";
                 _layoutSwapKey.shiftDisplayCharacter = "123";
                 _layoutSwapKey.RefreshDisplayCharacter();
-            }
-            else if (layout == Layout.Numbers)
-            {
-                // Show numbers layout
+            } else if (layout == Layout.Numbers) {
+                // Swap layouts
                 _letters.SetActive(false);
-                _shiftedLetters.SetActive(false); // Ensure shifted letters are hidden
                 _numbers.SetActive(true);
+                _symbols.SetActive(false);
+
+                // Update layout swap key
+                _layoutSwapKey.displayCharacter      = "{[]}";
+                _layoutSwapKey.shiftDisplayCharacter = "{[]}";
+                _layoutSwapKey.RefreshDisplayCharacter();
+            } else if (layout == Layout.Symbols) {
+                // Swap layouts
+                _letters.SetActive(false);
+                _numbers.SetActive(false);
+                _symbols.SetActive(true);
 
                 // Update layout swap key
                 _layoutSwapKey.displayCharacter = "abc";
@@ -181,5 +181,32 @@ namespace Normal.UI {
             _layout = layout;
         }
 
+        void CycleLayout()
+        {
+            if (_layout == Layout.Letters)
+            {
+                // Reset the shifted state
+                shifted = false;
+
+                // Hide shifted letters and switch to numbers
+                _shiftedLetters.SetActive(false);
+                _letters.SetActive(false);
+                SetLayout(Layout.Numbers);
+            }
+            else if (_layout == Layout.Numbers)
+            {
+                SetLayout(Layout.Symbols);
+            }
+            else if (_layout == Layout.Symbols)
+            {
+                // Reset the shifted state when cycling back to letters
+                shifted = false;
+
+                // Make sure normal letters are shown
+                _shiftedLetters.SetActive(false);
+                _letters.SetActive(true);
+                SetLayout(Layout.Letters);
+            }
+        }
     }
 }

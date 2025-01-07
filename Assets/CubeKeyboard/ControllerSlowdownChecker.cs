@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using System.IO;
-    
+
 public class ControllerSlowdownChecker : MonoBehaviour
 {
     public OVRInput.Controller controller = OVRInput.Controller.RTouch; // Adjust for left or right controller
@@ -15,7 +15,7 @@ public class ControllerSlowdownChecker : MonoBehaviour
     public OVRInput.Button button = OVRInput.Button.PrimaryHandTrigger;
     // Change the material color based on velocity for feedback
     //public Slider slider;
-    public float sensitivity = 0.16f;
+    public float sensitivity = 0.1f;
 
     private Material material;
     private Collider currentCollider = null; // Tracks the collider the controller is interacting with
@@ -67,6 +67,7 @@ public class ControllerSlowdownChecker : MonoBehaviour
         //debugText.text = slider.value.ToString("0.000");
         Vector3 currentPosition = keyboardMallet.transform.position;
         Vector3 velocity = (currentPosition - lastPosition) / Time.deltaTime;
+        // velocity last velocity angle dazwischen  if significant = alles größer als 120 grad so 
         debugText.text += "\n velocity: " + velocity.magnitude.ToString();
 
         float time = Time.time;
@@ -136,7 +137,7 @@ public class ControllerSlowdownChecker : MonoBehaviour
 
         if (key != null && !letterSelected)
         {
-            if (key.IsMalletHeadInFrontOfCubeKey(keyboardMallet))
+            if (true || key.IsMalletHeadInFrontOfCubeKey(keyboardMallet))
             {
                 _keyboard._MalletStruckCubeKeyboardKey(keyboardMallet, key);
                 //ChangeButtonColor(other, highlightMaterial); // Change to red

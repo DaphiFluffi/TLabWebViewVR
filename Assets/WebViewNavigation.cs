@@ -2,7 +2,6 @@ using Normal.UI;
 using System;
 using TLab.Android.WebView;
 using UnityEngine;
-using static UnityEngine.AudioSettings;
 
 public class WebViewNavigation : MonoBehaviour
 {

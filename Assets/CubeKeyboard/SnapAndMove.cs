@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Normal.UI;
 
 public class SnapAndMove : MonoBehaviour
 {
@@ -7,15 +10,39 @@ public class SnapAndMove : MonoBehaviour
     public Material highlightMaterial;
     public Material defaultMaterial;
     public Renderer keyboardRenderer;
+    public OVRInput.Controller controller = OVRInput.Controller.RTouch;
+    public Text debugText;
+    public CubeKeyboardDisplay cubeKeyboardDisplay;
+
+    private TMP_InputField _inputField;
 
 
-    private bool isSnapped = false; 
-
-    //private Vector3 offset; // Offset between the head and the keyboard when snapped
+    private bool isSnapped = false;
+    private bool isButtonHeld = false; // Tracks if the A button is held
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One))
+        bool isAButtonPressed = OVRInput.Get(OVRInput.Button.One, controller);
+
+        if (isAButtonPressed && !isButtonHeld)
+        {
+            // A button has just been pressed
+            isButtonHeld = true;
+            Unsnap();
+
+        }
+        else if (!isAButtonPressed && isButtonHeld)
+        {
+            // A button has just been released
+            isButtonHeld = false;
+            Snap();
+            // Write a space and clear the input field
+
+            WriteSpaceAndClearInput();
+
+        }
+
+        /*if (OVRInput.GetDown(OVRInput.Button.One))
         {
             if (isSnapped)
             {
@@ -26,7 +53,7 @@ public class SnapAndMove : MonoBehaviour
                 Snap();
             }
         }
-
+        */
         if (isSnapped)
         {
             cubeKeyboard.position = drumstickHead.position;
@@ -45,5 +72,12 @@ public class SnapAndMove : MonoBehaviour
     {
         isSnapped = false;
         keyboardRenderer.material = defaultMaterial;
+    }
+
+    void WriteSpaceAndClearInput()
+    {
+        debugText.text = "write whitespace techincally";
+        cubeKeyboardDisplay.PressSpaceAndClearTMPInputField();
+
     }
 }

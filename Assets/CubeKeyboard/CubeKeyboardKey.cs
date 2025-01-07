@@ -13,8 +13,8 @@ namespace Normal.UI {
         public string shiftCharacter        = null;
         public string shiftDisplayCharacter = null;
 
-        private bool _shift = false;
-        public  bool  shift { get { return _shift; } set { SetShift(value); } }
+       // private bool _shift = false;
+       // public  bool  shift { get { return _shift; } set { SetShift(value); } }
 
         [SerializeField]
         private Text _text;
@@ -64,14 +64,14 @@ namespace Normal.UI {
             }
         }
 
-        void SetShift(bool shift) {
+       /* void SetShift(bool shift) {
             if (shift == _shift)
                 return;
 
             _shift = shift;
 
-            RefreshDisplayCharacter();
-        }
+            //RefreshDisplayCharacter();
+        }*/
 
         // Key animation
         void Update() {
@@ -103,25 +103,25 @@ namespace Normal.UI {
                 dc = displayCharacter;
 
             // If we're in shift mode, check our shift overrides.
-            if (_shift) {
+            /*if (_shift) {
                 if (shiftDisplayCharacter != null && shiftDisplayCharacter != "")
                     dc = shiftDisplayCharacter;
                 else if (shiftCharacter != null && shiftCharacter != "")
                     dc = shiftCharacter;
                 else
                     dc = dc.ToUpper();
-            }
+            }*/
 
             return dc;
         }
 
         public string GetCharacter() {
-            if (shift) {
+            /*if (shift) {
                 if (shiftCharacter != null && shiftCharacter != "")
                     return shiftCharacter;
                 else
                     return character.ToUpper();
-            }
+            }*/
 
             return character;
         }
