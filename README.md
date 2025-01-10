@@ -1,3 +1,9 @@
+# Master's Thesis on Code Entry in Virtual Reality
+The thesis consisted of the re-implementation of several VR text entry systems from the literature and a user study on the intuitiveness and learnability of the text entry systems in a custom tesing environment. 
+
+Testing Environment runs in the [TLabWebViewVR Browser](https://github.com/TLabAltoh/TLabWebViewVR). It can be moved using the [MoveAndScale.cs](https://github.com/NormalVR/CutieKeys/blob/master/Assets/Keyboard/Scripts/MoveAndScale.cs) by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master).
+
+--- Original README ---
 # TLabWebViewVR
 
 [日本語版READMEはこちら](README-ja.md)
