@@ -59,9 +59,8 @@ namespace Normal.UI {
             keyboard.keyPressed -= KeyPressed;
         }
 
-        public void PressSpaceAndClearTMPInputField()
+        public void ClearTMPInputField()
         {
-            m_webview_component.OnKeyPressed(" ");
             _inputField.Select();
             _inputField.text = "";
         }

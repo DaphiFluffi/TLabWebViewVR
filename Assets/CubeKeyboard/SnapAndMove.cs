@@ -38,7 +38,7 @@ public class SnapAndMove : MonoBehaviour
             Snap();
             // Write a space and clear the input field
 
-            WriteSpaceAndClearInput();
+            ClearInput();
 
         }
 
@@ -74,10 +74,10 @@ public class SnapAndMove : MonoBehaviour
         keyboardRenderer.material = defaultMaterial;
     }
 
-    void WriteSpaceAndClearInput()
+    void ClearInput()
     {
-        debugText.text = "write whitespace techincally";
-        cubeKeyboardDisplay.PressSpaceAndClearTMPInputField();
+        debugText.text = "clear input field";
+        cubeKeyboardDisplay.ClearTMPInputField();
 
     }
 }

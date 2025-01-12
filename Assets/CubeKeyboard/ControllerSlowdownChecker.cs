@@ -68,7 +68,7 @@ public class ControllerSlowdownChecker : MonoBehaviour
         Vector3 currentPosition = keyboardMallet.transform.position;
         Vector3 velocity = (currentPosition - lastPosition) / Time.deltaTime;
         // velocity last velocity angle dazwischen  if significant = alles größer als 120 grad so 
-        debugText.text += "\n velocity: " + velocity.magnitude.ToString();
+        //debugText.text += "\n velocity: " + velocity.magnitude.ToString();
 
         float time = Time.time;
         float velocityMagnitude = velocity.magnitude;
@@ -93,7 +93,7 @@ public class ControllerSlowdownChecker : MonoBehaviour
             }
         }
 
-        file.WriteLine($"{time},{velocityMagnitude},{letterSelected}");
+        // file.WriteLine($"{time},{velocityMagnitude},{letterSelected}");
 
     }
 
