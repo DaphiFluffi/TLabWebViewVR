@@ -1,7 +1,8 @@
 # Master's Thesis on Code Entry in Virtual Reality
 The thesis consisted of the re-implementation of several VR text entry systems from the literature and a user study on the intuitiveness and learnability of the text entry systems in a custom tesing environment. 
 
-Testing Environment runs in the [TLabWebViewVR Browser](https://github.com/TLabAltoh/TLabWebViewVR). It can be moved using the [MoveAndScale.cs](https://github.com/NormalVR/CutieKeys/blob/master/Assets/Keyboard/Scripts/MoveAndScale.cs) by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master).
+Testing Environment runs in the [TLabWebViewVR Browser](https://github.com/TLabAltoh/TLabWebViewVR). It can be moved using the [MoveAndScale.cs](https://github.com/NormalVR/CutieKeys/blob/master/Assets/Keyboard/Scripts/MoveAndScale.cs) by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master). Cube Keyboard Scripts are heavily based on Drum Keyboard by by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master) as well. 
+Main Scene is in: Assets/TLab/TLabWebViewVR/MetaXR/Samples/Scenes/MetaXR Sample.unity
 
 --- Original README ---
 # TLabWebViewVR
