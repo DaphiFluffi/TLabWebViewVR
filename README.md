@@ -4,8 +4,36 @@ The thesis consisted of the re-implementation of several VR text entry systems f
 Testing Environment runs in the [TLabWebViewVR Browser](https://github.com/TLabAltoh/TLabWebViewVR). It can be moved using the [MoveAndScale.cs](https://github.com/NormalVR/CutieKeys/blob/master/Assets/Keyboard/Scripts/MoveAndScale.cs) by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master). Cube Keyboard Scripts are heavily based on Drum Keyboard by by [NormalVR/CutieKeys](https://github.com/NormalVR/CutieKeys/tree/master) as well. 
 Main Scene is in: Assets/TLab/TLabWebViewVR/MetaXR/Samples/Scenes/MetaXR Sample.unity
 
---- Original README ---
-# TLabWebViewVR
+## Inspector Stucture
+<img width="306" height="335" alt="fig-inspector" src="https://github.com/user-attachments/assets/80beb541-30e0-4f28-b46e-9d97180ab708" />
+
+
+## Text Entry Systems
+
+### PizzaText
+<img width="471" height="471" alt="fig-pt-menu-of-pizzas" src="https://github.com/user-attachments/assets/6e7d181b-df7a-4704-92fe-227fcf2c1630" />
+<img width="975" height="234" alt="fig-pt-me" src="https://github.com/user-attachments/assets/9136e0e3-ada2-4f47-96d8-26669a572121" />
+
+### Cubic Keyboard
+<img width="656" height="345" alt="fig-ck-me" src="https://github.com/user-attachments/assets/9252c506-2f2d-4c38-85fa-2582a883a6d5" />
+<img width="816" height="414" alt="fig-ck-lowercase" src="https://github.com/user-attachments/assets/c26c7613-be79-46d3-bd6c-5c07a9e2fe72" />
+<img width="834" height="386" alt="fig-ck-uppercase" src="https://github.com/user-attachments/assets/67be694e-e415-4249-9957-305940eeddde" />
+<img width="835" height="365" alt="fig-ck-numbers" src="https://github.com/user-attachments/assets/a8fb8b14-768d-4d45-a387-b155c6d0bede" />
+<img width="824" height="386" alt="fig-ck-symbols" src="https://github.com/user-attachments/assets/6710ebfb-4b36-4ff4-b441-0d57139bb123" />
+
+## Virtual Keyboard 
+very similar to TLabKeyborad, slightly different layout + added Tab and Arrow keys
+<img width="1628" height="916" alt="fig-virtual-tlab" src="https://github.com/user-attachments/assets/c9f18192-7168-4f2e-93c7-00d7c68320e0" />
+<img width="920" height="255" alt="vk-tlab-layout-letters" src="https://github.com/user-attachments/assets/c3d8cc8c-db07-45e3-9d0d-e9f956c69879" />
+<img width="913" height="246" alt="vk-tlab-layout-symbols" src="https://github.com/user-attachments/assets/e52f2ee6-c1dd-4bcc-883d-d3661481066e" />
+
+## Custom Study Testing Environment Displayed in Browser
+<img width="1887" height="1062" alt="fig-env-unity" src="https://github.com/user-attachments/assets/ba0aa3f6-9224-4aed-8da1-4c17c1971269" />
+
+## Added Buttons to Browser
+<img width="1321" height="793" alt="fig-browser-unity-buttons" src="https://github.com/user-attachments/assets/58e9f6d8-0a34-4833-9678-8ee7c128a7e5" />
+
+# Original README TLabWebViewVR
 
 [日本語版READMEはこちら](README-ja.md)
 
