@@ -96,7 +96,7 @@ Cubic Keyboard;L-R:Control Char Side Panel, Main Keyboard and Text Entry Field, 
 
 <figure>
   <img width=40% alt="fig-env-unity" src="https://github.com/user-attachments/assets/ba0aa3f6-9224-4aed-8da1-4c17c1971269" />
-  <img width=40% alt="fig-browser-unity-buttons" src="https://github.com/user-attachments/assets/58e9f6d8-0a34-4833-9678-8ee7c128a7e5" />
+  <img width=38% alt="fig-browser-unity-buttons" src="https://github.com/user-attachments/assets/58e9f6d8-0a34-4833-9678-8ee7c128a7e5" />
   
   TLab's Browser with added navigaton bar displaying our custom coding env
 </figure>
