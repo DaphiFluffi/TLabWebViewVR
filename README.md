@@ -87,7 +87,7 @@ Cubic Keyboard;L-R:Control Char Side Panel, Main Keyboard and Text Entry Field, 
 ## Eye-Shaped Keyboard
 
 <figure>
-  <img width=30% alt="modified-eye-keyboard" src="https://github.com/user-attachments/assets/13bd8543-1898-4ded-b090-7ba49c68df4e" />
+  <img width=40% alt="modified-eye-keyboard" src="https://github.com/user-attachments/assets/0c3ee51c-3f12-42d8-a9bb-74fd661d7a0f" />
 
   Modified Eye-Shaped Keyboard Layout
 </figure>
